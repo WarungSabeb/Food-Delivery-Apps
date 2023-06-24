@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery/main_screen/homepage.dart';
-
+import 'package:food_delivery/main_screen/gofood.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -103,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) => gofood()));
                           },
                           child: Container(
                             width: 200,

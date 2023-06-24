@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery/main_screen/homepage.dart';
 import 'package:food_delivery/login.dart';
+import 'package:food_delivery/main_screen/gofood.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -161,7 +161,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) => gofood()));
                           },
                           child: Container(
                             width: 200,
