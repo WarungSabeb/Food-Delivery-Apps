@@ -87,35 +87,35 @@ class _gofoodState extends State<gofood> {
                         scrollDirection: Axis.horizontal,
                         children: [
                           IconCardWidget(
-                            iconAssets: 'images/icon/nasi.png',
+                            iconAssets: 'assets/images/icon/nasi.png',
                             iconTitle: 'Aneka Nasi',
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.05,
                           ),
                           IconCardWidget(
-                            iconAssets: 'images/icon/sweet.png',
+                            iconAssets: 'assets/images/icon/sweet.png',
                             iconTitle: 'Jajanan',
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.05,
                           ),
                           IconCardWidget(
-                            iconAssets: 'images/icon/minuman.png',
+                            iconAssets: 'assets/images/icon/minuman.png',
                             iconTitle: 'Minuman',
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.05,
                           ),
                           IconCardWidget(
-                            iconAssets: 'images/icon/roti.png',
+                            iconAssets: 'assets/images/icon/roti.png',
                             iconTitle: 'Roti',
                           ),
                            SizedBox(
                             width: MediaQuery.of(context).size.width * 0.05,
                           ),
                             IconCardWidget(
-                            iconAssets: 'images/icon/cepat saji.png',
+                            iconAssets: 'assets/images/icon/cepat saji.png',
                             iconTitle: 'Cepat Saji',
                           ),                         
                         ],
