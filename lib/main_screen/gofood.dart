@@ -69,6 +69,14 @@ class _gofoodState extends State<gofood> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // call banner handler
+
+                     Text(
+                            'Categories',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
                     BannerWidget(),
                     SizedBox(
                       height: 20,
@@ -79,31 +87,37 @@ class _gofoodState extends State<gofood> {
                         scrollDirection: Axis.horizontal,
                         children: [
                           IconCardWidget(
-                            // iconAssets: 'icon/map.png',
-                            iconAssets: 'assets/images/icon/map.png',
-                            iconTitle: 'Terdekat',
+                            iconAssets: 'images/icon/nasi.png',
+                            iconTitle: 'Aneka Nasi',
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.05,
                           ),
                           IconCardWidget(
-                            iconAssets: 'assets/images/icon/insignia.png',
-                            iconTitle: 'Rekomendasi',
+                            iconAssets: 'images/icon/sweet.png',
+                            iconTitle: 'Jajanan',
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.05,
                           ),
                           IconCardWidget(
-                            iconAssets: 'assets/images/icon/discount.png',
-                            iconTitle: 'Pasti Promo',
+                            iconAssets: 'images/icon/minuman.png',
+                            iconTitle: 'Minuman',
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.05,
                           ),
                           IconCardWidget(
-                            iconAssets: 'assets/images/icon/favorite.png',
-                            iconTitle: 'Terfavorit',
+                            iconAssets: 'images/icon/roti.png',
+                            iconTitle: 'Roti',
                           ),
+                           SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.05,
+                          ),
+                            IconCardWidget(
+                            iconAssets: 'images/icon/cepat saji.png',
+                            iconTitle: 'Cepat Saji',
+                          ),                         
                         ],
                       ),
                     ),
@@ -112,7 +126,7 @@ class _gofoodState extends State<gofood> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Resto Ter-Markotop',
+                            'Populer',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w900,
