@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/main_screen/gofood.dart';
+import 'package:flutter/services.dart';
+
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -15,11 +18,6 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.white,
         body: Column(
           children: [
-            Container(
-              width: 150,
-              height: MediaQuery.of(context).size.height / 3,
-              child: Image.asset('assets/images/tasty.jpg'),
-            ),
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -34,8 +32,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.all(20.0),
                   child: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        Container(
+                          width: 150,
+                          height: MediaQuery.of(context).size.height / 3,
+                          child: Image.asset('assets/images/tasty.jpg'),
+                        ),
+
                         const SizedBox(height: 10),
                         Container(
                           decoration: BoxDecoration(
@@ -51,7 +55,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                           
-                          child: const TextField(
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
                               border: InputBorder.none,
@@ -82,6 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           
                           child: const TextField(
+                            
+                            obscureText: true,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
                               border: InputBorder.none,

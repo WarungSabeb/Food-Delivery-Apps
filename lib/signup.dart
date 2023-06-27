@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/login.dart';
 import 'package:food_delivery/main_screen/gofood.dart';
+import 'package:flutter/services.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -17,11 +18,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         backgroundColor: Colors.white,
         body: Column(
           children: [
-            Container(
-              width: 150,
-              height: MediaQuery.of(context).size.height / 3,
-              child: Image.asset('assets/images/tasty.jpg'),
-            ),
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -36,9 +32,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   padding: const EdgeInsets.all(20.0),
                   child: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // const SizedBox(height: 10),
+
+                        Container(
+                          width: 150,
+                          height: MediaQuery.of(context).size.height / 3,
+                          child: Image.asset('assets/images/tasty.jpg'),
+                        ),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
@@ -68,6 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
 
                         const SizedBox(height: 20),
+                        
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
@@ -83,6 +85,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           
                           child: const TextField(
+                            obscureText: true,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
                               border: InputBorder.none,
@@ -111,7 +114,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ],
                           ),
                           
-                          child: const TextField(
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
                               border: InputBorder.none,
