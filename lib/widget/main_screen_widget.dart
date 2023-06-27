@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new, prefer_const_constructors, prefer_final_fields
+
 import 'package:flutter/material.dart';
 import 'package:food_delivery/data/banner_data.dart';
 import 'package:food_delivery/model/banner_model.dart';
@@ -249,13 +251,8 @@ class BannerWidget extends StatelessWidget {
 class SearchBox extends StatefulWidget {
   SearchBox({
     Key? key,
-    this.paddingVertical,
-    this.paddingHorizontal,
+
   }) : super(key: key);
-
-  final paddingVertical;
-  final paddingHorizontal;
-
   @override
   _SearchBoxState createState() => _SearchBoxState();
 }
@@ -267,25 +264,18 @@ class _SearchBoxState extends State<SearchBox> {
     return Container(
       color: Colors.white,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: widget.paddingHorizontal),
+        padding: EdgeInsets.symmetric(horizontal: 7),
         child: new Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: Color.fromARGB(255, 249, 154, 186),
           child: new ListTile(
             leading: new Icon(Icons.search),
             title: TextField(
               controller: _textEditingController,
               decoration: new InputDecoration(
-                hintText: 'Mau Makan Apa Hari ini?',
+                hintText: 'Find Your Food',
                 border: InputBorder.none,
                 fillColor: Colors.black,
-              ),
-            ),
-            trailing: new IconButton(
-              onPressed: () {
-                _textEditingController.clear();
-              },
-              icon: new Icon(
-                Icons.cancel,
-                size: 18,
               ),
             ),
           ),
