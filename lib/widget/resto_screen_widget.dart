@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 
 class MenuListUnvailable extends StatelessWidget {
@@ -50,7 +52,7 @@ class MenuListUnvailable extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      'Produk Ini Tidak Tersedia',
+                      'Out of Stock',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -242,11 +244,80 @@ class MenuListAvailable extends StatelessWidget {
                 SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
+                    // Navigator.of(context).pop();
+
+                    
+
+                  //   showModalBottomSheet(
+                  //   context: context,
+                  //   isScrollControlled: true, // Set this flag to allow content overflow
+                  //   builder: (BuildContext context) {
+                  //     return Container(
+                  //       height: MediaQuery.of(context).size.height * 0.2, // Adjust the height as needed
+                  //       child: ListView(
+                  //         // Give the ListView enough space to scroll
+                  //         padding: EdgeInsets.only(
+                  //           bottom: MediaQuery.of(context).viewInsets.bottom,
+                  //         ),
+                  //         children: [
+                  //           Container(
+                  //         height: 100,
+                  //         color: Colors.amber,
+                  //         child: Center(
+                  //           child: Column(
+                  //             mainAxisAlignment: MainAxisAlignment.center,
+                  //             mainAxisSize: MainAxisSize.min,
+                  //             children: <Widget>[
+                  //               const Text('Modal BottomSheet'),
+                  //               ElevatedButton(
+                  //                 child: const Text('Close BottomSheet'),
+                  //                 onPressed: () => Navigator.pop(context),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       )
+                  //         ],
+                  //       ),
+                  //     );
+                  //   },
+                  // );
+
+                    // showModalBottomSheet<void>(
+                    //   context: context,
+                    //   barrierColor: Colors.transparent,
+                    //   // enableDrag: true,
+                    //   isDismissible: false,
+                    //   builder: (BuildContext context) {
+                    //     return Container(
+                    //       height: 75,
+                    //       color: Colors.white,
+                    //       child: Center(
+                    //         child: Column(
+                    //           mainAxisAlignment: MainAxisAlignment.center,
+                    //           mainAxisSize: MainAxisSize.min,
+                    //           children: <Widget>[
+                    //             // const Text('Modal BottomSheet'),
+                    //             ElevatedButton(
+                    //               child: const Text('Close BottomSheet'),
+                    //               onPressed: () => Navigator.pop(context),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     );
+                    //   },
+                    // );
+
                     final scaffold = ScaffoldMessenger.of(context);
                     Navigator.of(context).pop();
                     scaffold.showSnackBar(
                       SnackBar(
-                        duration: Duration(seconds: 2),
+                        elevation: 10,
+                        duration: Duration(days: 365),
+                        shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
                         content: Text(
                           '$foodName has been ordered!',
                           overflow: TextOverflow.ellipsis,
@@ -259,7 +330,11 @@ class MenuListAvailable extends StatelessWidget {
                         backgroundColor: Colors.green.shade700,
                       ),
                     );
+
+
                   },
+
+
                   child: Text(
                     'Pesan Sekarang',
                     style: TextStyle(

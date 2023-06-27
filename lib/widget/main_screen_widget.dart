@@ -261,27 +261,37 @@ class _SearchBoxState extends State<SearchBox> {
   TextEditingController _textEditingController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 7),
-        child: new Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    return 
+    Padding(
+      padding: EdgeInsets.symmetric(horizontal: 7),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
           color: Color.fromARGB(255, 249, 154, 186),
-          child: new ListTile(
-            leading: new Icon(Icons.search),
-            title: TextField(
-              controller: _textEditingController,
-              decoration: new InputDecoration(
-                hintText: 'Find Your Food',
-                border: InputBorder.none,
-                fillColor: Colors.black,
+          boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 1,
+                offset: const Offset(0, 1),
+              ),
+            ],
+          ),
+                            
+          child: TextField(
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              prefixIcon: Icon(
+                Icons.search,
+                color: Colors.black,
+              ),
+              hintText: 'Find Your Food',
+              hintStyle: TextStyle(color: Colors.black),
               ),
             ),
           ),
-        ),
-      ),
-    );
+      );
   }
 }
 
