@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/data/resto_data.dart';
 import 'package:food_delivery/model/resto_model.dart';
 import 'package:food_delivery/widget/main_screen_widget.dart';
+import 'package:food_delivery/signup.dart';
 
 class gofood extends StatefulWidget {
   gofood({Key? key}) : super(key: key);
@@ -17,16 +18,18 @@ class _gofoodState extends State<gofood> {
   var _verticalPadding = 10.0;
   var _horizontalPadding = 10.0;
 
-  final String _alamat = "Home";
-
   void _onTappedBottomNav(int index) {
     final scaffold = ScaffoldMessenger.of(context);
-    List<String> menuBottomNav = ['Explore', 'Pencarian', 'Favorit'];
+    List<String> menuBottomNav = ['Home', 'History', 'Cart', 'Profile'];
+    // List menuBottomNav = [gofood(), History(), Cart(), Profile()];
     if (index != _selectedIndex) {
       setState(() {
         _selectedIndex = index;
       });
-      if (index == 1) {
+
+      // Navigator.push(context,MaterialPageRoute(builder: (context) => menuBottomNav.elementAt(index)));
+        
+        // Hapus aja kalo udh ada halamannya
         scaffold.showSnackBar(
           SnackBar(
             duration: Duration(seconds: 1),
@@ -41,7 +44,6 @@ class _gofoodState extends State<gofood> {
             backgroundColor: Colors.white,
           ),
         );
-      }
     }
   }
 
@@ -130,7 +132,7 @@ class _gofoodState extends State<gofood> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SearchBox(),
-                    SizedBox(height: 10),
+                    SizedBox(height: 30),
                      
                     BannerWidget(),
 
@@ -304,21 +306,29 @@ class _gofoodState extends State<gofood> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            label: 'Explore',
+            icon: Icon(Icons.home_filled, size: 35),
+            label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Pencarian',
+            icon: Icon(Icons.receipt_long, size: 35),
+            label: 'History',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorit',
+            icon: Icon(Icons.shopping_cart, size: 35),
+            label: 'Cart',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person, size: 35),
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.red,
+        unselectedItemColor: Colors.black,
         onTap: _onTappedBottomNav,
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
       ),
     );
   }
