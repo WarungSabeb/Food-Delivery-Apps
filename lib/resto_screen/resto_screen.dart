@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:food_delivery/model/menu_model.dart';
 import 'package:food_delivery/model/resto_model.dart';
@@ -99,7 +97,7 @@ class RestoScreen extends StatelessWidget {
                         children: [
                           // rating
                           RestoReviewWidget(
-                            keterangan: '${data.restoJudges} Rating',
+                            keterangan: '${data.restoJudges} ratings',
                             iconsValue: '${data.restoRating}',
                             iconsColor: Colors.orange,
                             icons: Icons.star,
@@ -111,7 +109,7 @@ class RestoScreen extends StatelessWidget {
                           ),
                           // jarak
                           RestoReviewWidget(
-                            keterangan: 'Jarak',
+                            keterangan: 'Distance',
                             iconsValue: '${data.restoDistance} km',
                             iconsColor: Colors.redAccent[700],
                             icons: Icons.location_on,
@@ -123,7 +121,7 @@ class RestoScreen extends StatelessWidget {
                           ),
                           // Harga
                           RestoReviewWidget(
-                            keterangan: 'Harga',
+                            keterangan: 'Price',
                             iconsValue: '< ${data.restoEstPrice}',
                             iconsColor: Colors.redAccent[700],
                             icons: Icons.monetization_on,
@@ -135,8 +133,8 @@ class RestoScreen extends StatelessWidget {
                           ),
                           // Rasa
                           RestoReviewWidget(
-                            keterangan: '100+ rating',
-                            iconsValue: 'Rasa Mantap',
+                            keterangan: 'Great taste',
+                            iconsValue: '100+ ratings',
                             iconsColor: Colors.redAccent[700],
                             icons: Icons.thumb_up,
                           ),
@@ -146,8 +144,8 @@ class RestoScreen extends StatelessWidget {
                             width: 25,
                           ),
                           RestoReviewWidget(
-                            keterangan: '100+ rating',
-                            iconsValue: 'Porsi Kuli',
+                            keterangan: 'Value for money',
+                            iconsValue: '100+ rating',
                             iconsColor: Colors.redAccent[700],
                             icons: Icons.rice_bowl_rounded,
                           ),
@@ -155,20 +153,9 @@ class RestoScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20),
-                    Text(
-                      'Menu Cuma Buat Kamu',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 18,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Iya kamu :)',
-                      style: TextStyle(
-                        fontSize: 11,
-                      ),
-                    ),
+
+
+
                     Divider(
                       height: 20,
                       thickness: 0.5,
