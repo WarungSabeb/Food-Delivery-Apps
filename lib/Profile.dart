@@ -1,29 +1,29 @@
-import 'package:flutter/material.dart';
-import 'package:food_delivery/login.dart';
-import 'package:flutter/services.dart';
-import 'package:food_delivery/main_screen/gofood.dart';
-import 'package:food_delivery/history.dart';
+// ignore_for_file: prefer_const_constructors
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+import 'package:flutter/material.dart';
+import 'package:food_delivery/signup.dart';
+import 'package:flutter/services.dart';
+
+class Profile extends StatefulWidget {
+  const Profile({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<Profile> createState() => _ProfileState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(240,91,145,1.000),
         body: Column(
           children: [
             Expanded(
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Color.fromRGBO(240,91,145,1.000),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
@@ -36,14 +36,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
 
+                        SizedBox(height: 30),
+
                         Container(
-                          width: 150,
-                          height: MediaQuery.of(context).size.height / 3,
-                          child: Image.asset('assets/images/tasty.jpg'),
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundColor: Color.fromRGBO(217,217,217,1.000),
+                            child: Icon(
+                              Icons.person,
+                              color: Colors.black,
+                              size: 60,
+                              ),
+                          ),
                         ),
+
+                        SizedBox(height: 40),
+
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
@@ -56,14 +67,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           
                           child: const TextField(
+                            enabled: false,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              prefixIcon: Icon(
-                                Icons.mail,
-                                color: Colors.pink,
+                              prefixIcon: Padding(
+                                padding:  EdgeInsets.only(left: 5),
+                                child: CircleAvatar(
+                                radius: 5,
+                                backgroundColor: Color.fromRGBO(255,38,116,0.49),
+                                child: Icon(
+                                  Icons.person,
+                                  color: Colors.white,
+                                  size: 25,
+                                  ),
                               ),
-                              hintText: 'Email',
+
+                              ),
+                              hintText: '    Mr. X',
                               hintStyle: TextStyle(color: Colors.black),
                             ),
                           ),
@@ -73,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
@@ -86,15 +107,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           
                           child: const TextField(
-                            obscureText: true,
+                            enabled: false,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              prefixIcon: Icon(
-                                Icons.lock_open,
-                                color: Colors.pink,
+                              prefixIcon: Padding(
+                                padding:  EdgeInsets.only(left: 5),
+                                child: CircleAvatar(
+                                radius: 5,
+                                backgroundColor: Color.fromRGBO(255,38,116,0.49),
+                                child: Icon(
+                                  Icons.mail,
+                                  color: Colors.white,
+                                  size: 25,
+                                  ),
                               ),
-                              hintText: 'Password',
+
+                              ),
+                              hintText: '    Email@email.com',
                               hintStyle: TextStyle(color: Colors.black),
                             ),
                           ),
@@ -103,38 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                          const SizedBox(height: 20),
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 1,
-                                blurRadius: 1,
-                                offset: const Offset(0, 1),
-                              ),
-                            ],
-                          ),
-                          
-                          child: TextField(
-                            keyboardType: TextInputType.number,
-                             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                            style: TextStyle(color: Colors.black),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              prefixIcon: Icon(
-                                Icons.phone_android,
-                                color: Colors.pink,
-                              ),
-                              hintText: 'Phone',
-                              hintStyle: TextStyle(color: Colors.black),
-                            ),
-                          ),
-                        ),
-
-                         const SizedBox(height: 20),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
@@ -147,65 +146,117 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           
                           child: const TextField(
+                            enabled: false,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              prefixIcon: Icon(
-                                Icons.person,
-                                color: Colors.pink,
+                              prefixIcon: Padding(
+                                padding:  EdgeInsets.only(left: 5),
+                                child: CircleAvatar(
+                                radius: 5,
+                                backgroundColor: Color.fromRGBO(255,38,116,0.49),
+                                child: Icon(
+                                  Icons.phone,
+                                  color: Colors.white,
+                                  size: 25,
+                                  ),
                               ),
-                              hintText: 'Name',
+
+                              ),
+                              hintText: '    081289614330',
+                              hintStyle: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ),
+
+                         const SizedBox(height: 20),
+
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 1,
+                                blurRadius: 1,
+                                offset: const Offset(0, 1),
+                              ),
+                            ],
+                          ),
+                          
+                          child: const TextField(
+                            enabled: false,
+                            style: TextStyle(color: Colors.black),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              prefixIcon: Padding(
+                                padding:  EdgeInsets.only(left: 5),
+                                child: CircleAvatar(
+                                radius: 5,
+                                backgroundColor: Color.fromRGBO(255,38,116,0.49),
+                                child: Icon(
+                                  Icons.location_on,
+                                  color: Colors.white,
+                                  size: 25,
+                                  ),
+                              ),
+
+                              ),
+                              hintText: '    Address',
                               hintStyle: TextStyle(color: Colors.black),
                             ),
                           ),
                         ),
 
                         const SizedBox(height: 30),
+                        
                         Container(
                           alignment: Alignment.center,
                           child: GestureDetector(
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(
-                                    builder: (context) => History()));
+                                    builder: (context) => SignUpScreen()));
                           },
                           child: Container(
-                            width: 200,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: Colors.pink,
-                            ),
-                            child: const Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Text(
-                                  ' Sign Up',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 1,
+                                blurRadius: 1,
+                                offset: const Offset(0, 1),
+                              ),
+                            ],
+                          ),
+                          
+                          child: const TextField(
+                            enabled: false,
+                            style: TextStyle(color: Colors.black),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              prefixIcon: Padding(
+                                padding:  EdgeInsets.only(left: 5),
+                                child: CircleAvatar(
+                                radius: 5,
+                                backgroundColor: Color.fromRGBO(255,38,116,0.49),
+                                child: Icon(
+                                  Icons.logout,
+                                  color: Colors.white,
+                                  size: 25,
                                   ),
-                                ),
                               ),
+
+                              ),
+                              hintText: '    Log Out',
+                              hintStyle: TextStyle(color: Colors.black),
                             ),
                           ),
                         ),
                         ),
-                        Container(
-                          alignment: Alignment.center,
-                          child:TextButton(
-                            onPressed: () {
-                                Navigator.push(context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginScreen()));
-                            }, 
-                            child: Text(
-                              'ALREADY HAVE AN ACCOUNT ?',
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 12
-                              ),
-                            )
-                          ),
                         ),
                       ],
                     ),
