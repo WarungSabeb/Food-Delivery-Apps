@@ -5,6 +5,8 @@ import 'package:food_delivery/data/resto_data.dart';
 import 'package:food_delivery/model/resto_model.dart';
 import 'package:food_delivery/widget/main_screen_widget.dart';
 import 'package:food_delivery/Profile.dart';
+import 'package:food_delivery/Cart.dart';
+import 'package:food_delivery/History.dart';
 
 class gofood extends StatefulWidget {
   gofood({Key? key}) : super(key: key);
@@ -20,30 +22,13 @@ class _gofoodState extends State<gofood> {
 
   void _onTappedBottomNav(int index) {
     final scaffold = ScaffoldMessenger.of(context);
-    List<String> menuBottomNav = ['Home', 'History', 'Cart', 'Profile'];
-    // List menuBottomNav = [gofood(), History(), Cart(), Profile()];
+    List menuBottomNav = [gofood(), History(), Cart(), Profile()];
     if (index != _selectedIndex) {
       setState(() {
         _selectedIndex = index;
       });
 
-      // Navigator.push(context,MaterialPageRoute(builder: (context) => menuBottomNav.elementAt(index)));
-        
-        // Hapus aja kalo udh ada halamannya
-        scaffold.showSnackBar(
-          SnackBar(
-            duration: Duration(seconds: 1),
-            content: Text(
-              '${menuBottomNav.elementAt(index)} was clicked',
-              style: TextStyle(color: Colors.red),
-            ),
-            action: SnackBarAction(
-              label: 'Close',
-              onPressed: scaffold.hideCurrentSnackBar,
-            ),
-            backgroundColor: Colors.white,
-          ),
-        );
+      Navigator.push(context,MaterialPageRoute(builder: (context) => menuBottomNav.elementAt(index)));
     }
   }
 
@@ -303,33 +288,44 @@ class _gofoodState extends State<gofood> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_filled, size: 35),
-            label: 'Home',
+      bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 5,
+            ),
+          ],
+        ),
+
+          child: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_filled, size: 35),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.receipt_long, size: 35),
+                label: 'History',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart, size: 35),
+                label: 'Cart',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person, size: 35),
+                label: 'Profile',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.red,
+            unselectedItemColor: Colors.black,
+            onTap: _onTappedBottomNav,
+            type: BottomNavigationBarType.fixed,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.receipt_long, size: 35),
-            label: 'History',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart, size: 35),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, size: 35),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.black,
-        onTap: _onTappedBottomNav,
-        type: BottomNavigationBarType.fixed,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-      ),
+        )
     );
   }
 

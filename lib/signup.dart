@@ -167,7 +167,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(
-                                    builder: (context) => History()));
+                                    builder: (context) => gofood()));
                           },
                           child: Container(
                             width: 200,

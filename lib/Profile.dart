@@ -3,6 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/signup.dart';
 import 'package:flutter/services.dart';
+import 'package:food_delivery/Profile.dart';
+import 'package:food_delivery/Cart.dart';
+import 'package:food_delivery/history.dart';
+import 'package:food_delivery/main_screen/gofood.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -12,6 +16,24 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
+  
+  int _selectedIndex = 3;
+
+  void _onTappedBottomNav(int index) {
+    final scaffold = ScaffoldMessenger.of(context);
+    List menuBottomNav = [gofood(), History(), Cart(), Profile()];
+    if (index != _selectedIndex) {
+      setState(() {
+        _selectedIndex = index;
+      });
+
+      Navigator.push(context,MaterialPageRoute(builder: (context) => menuBottomNav.elementAt(index)));
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -266,6 +288,44 @@ class _ProfileState extends State<Profile> {
             )
           ],
         ),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 5,
+            ),
+          ],
+        ),
+
+          child: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_filled, size: 35),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.receipt_long, size: 35),
+                label: 'History',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart, size: 35),
+                label: 'Cart',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person, size: 35),
+                label: 'Profile',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.red,
+            unselectedItemColor: Colors.black,
+            onTap: _onTappedBottomNav,
+            type: BottomNavigationBarType.fixed,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+          ),
+        )
       ),
     );
   }
