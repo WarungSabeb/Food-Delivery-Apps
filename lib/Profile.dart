@@ -21,7 +21,6 @@ class _ProfileState extends State<Profile> {
   int _selectedIndex = 3;
 
   void _onTappedBottomNav(int index) {
-    final scaffold = ScaffoldMessenger.of(context);
     List menuBottomNav = [gofood(), History(), Cart(), Profile()];
     if (index != _selectedIndex) {
       setState(() {
@@ -317,7 +316,7 @@ class _ProfileState extends State<Profile> {
                 label: 'Profile',
               ),
             ],
-            currentIndex: _selectedIndex,
+            currentIndex: 3,
             selectedItemColor: Colors.red,
             unselectedItemColor: Colors.black,
             onTap: _onTappedBottomNav,

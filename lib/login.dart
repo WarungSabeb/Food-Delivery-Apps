@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Padding(
                                 padding: EdgeInsets.all(10.0),
                                 child: Text(
-                                  ' Log In',
+                                  'Log In',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 25,

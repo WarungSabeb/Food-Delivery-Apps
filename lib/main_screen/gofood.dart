@@ -21,7 +21,6 @@ class _gofoodState extends State<gofood> {
   var _horizontalPadding = 10.0;
 
   void _onTappedBottomNav(int index) {
-    final scaffold = ScaffoldMessenger.of(context);
     List menuBottomNav = [gofood(), History(), Cart(), Profile()];
     if (index != _selectedIndex) {
       setState(() {
@@ -98,13 +97,10 @@ class _gofoodState extends State<gofood> {
     return Scaffold(
       body: Column(
         children: [
-          // this for header
           buildHeader(),
           SizedBox(
             height: 10,
           ),
-          // to call search box
-          // SearchBox(),
 
           SizedBox(
             height: 10,
@@ -196,15 +192,6 @@ class _gofoodState extends State<gofood> {
                                   ),
                                 ),
                           ),
-                          // SizedBox(
-                          //   height: 5,
-                          // ),
-                          // Text(
-                          //   'Hanya buat kamu, iya kamu :)',
-                          //   style: TextStyle(
-                          //     fontSize: 12,
-                          //   ),
-                          // ),
                           SizedBox(
                             height: 10,
                           ),
@@ -317,7 +304,7 @@ class _gofoodState extends State<gofood> {
                 label: 'Profile',
               ),
             ],
-            currentIndex: _selectedIndex,
+            currentIndex: 0,
             selectedItemColor: Colors.red,
             unselectedItemColor: Colors.black,
             onTap: _onTappedBottomNav,

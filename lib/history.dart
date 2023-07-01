@@ -47,7 +47,6 @@ class _HistoryState extends State<History> {
   ];
 
   void _onTappedBottomNav(int index) {
-    final scaffold = ScaffoldMessenger.of(context);
     List menuBottomNav = [gofood(), History(), Cart(), Profile()];
     if (index != _selectedIndex) {
       setState(() {
@@ -116,9 +115,9 @@ class _HistoryState extends State<History> {
           ]),
           )
         ),
-        Container( 
+        Expanded( 
 
-          height: 492,
+          // height: 492,
           child: TabBarView(children: [
 
             ListView(
@@ -237,7 +236,11 @@ Widget _history(String restaurant, String date, String price) {
             ),
             SizedBox(height: 5),
 
-            _tabSection(context)
+            
+            Expanded(
+              child: _tabSection(context),
+              )
+            
             
           ],
         ),
@@ -270,7 +273,7 @@ Widget _history(String restaurant, String date, String price) {
                 label: 'Profile',
               ),
             ],
-            currentIndex: _selectedIndex,
+            currentIndex: 1,
             selectedItemColor: Colors.red,
             unselectedItemColor: Colors.black,
             onTap: _onTappedBottomNav,

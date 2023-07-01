@@ -179,7 +179,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               child: Padding(
                                 padding: EdgeInsets.all(10.0),
                                 child: Text(
-                                  ' Sign Up',
+                                  'Sign Up',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 25,

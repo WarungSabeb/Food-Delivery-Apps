@@ -13,9 +13,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'TastyGo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
+      // theme: ThemeData(
+      //   primarySwatch: Colors.green,
+      // ),
       home: const SignUpScreen(),
     );
   }
