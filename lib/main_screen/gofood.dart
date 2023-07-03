@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/data/resto_data.dart';
 import 'package:food_delivery/model/resto_model.dart';
 import 'package:food_delivery/widget/main_screen_widget.dart';
-import 'package:food_delivery/Profile.dart';
-import 'package:food_delivery/Cart.dart';
-import 'package:food_delivery/History.dart';
+import 'package:food_delivery/main_screen/Profile.dart';
+import 'package:food_delivery/main_screen/Cart.dart';
+import 'package:food_delivery/main_screen/History.dart';
 
 class gofood extends StatefulWidget {
   gofood({Key? key}) : super(key: key);
