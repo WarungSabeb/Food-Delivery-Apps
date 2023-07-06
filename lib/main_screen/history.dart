@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_delivery/main_screen/Profile.dart';
-import 'package:food_delivery/main_screen/Cart.dart';
+import 'package:food_delivery/main_screen/cart.dart';
 import 'package:food_delivery/main_screen/history.dart';
 import 'package:food_delivery/main_screen/gofood.dart';
 
@@ -47,7 +47,13 @@ class _HistoryState extends State<History> {
   ];
 
   void _onTappedBottomNav(int index) {
-    List menuBottomNav = [gofood(), History(), Cart(), Profile()];
+    List menuBottomNav = [gofood(), History(), Cart(
+                                foodName: "Ayam",
+                                foodPrice: 10000,
+                                quantity: 1,
+                                restoName: 'KFC',
+                                foodImage: 'assets/images/kuliner/bakso-mie.jpg',
+                              ), Profile()];
     if (index != _selectedIndex) {
       setState(() {
         _selectedIndex = index;

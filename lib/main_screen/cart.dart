@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_delivery/main_screen/Profile.dart';
-import 'package:food_delivery/main_screen/Cart.dart';
 import 'package:food_delivery/main_screen/history.dart';
 import 'package:food_delivery/main_screen/gofood.dart';
 import 'package:intl/intl.dart';
@@ -12,18 +11,69 @@ List<String> list = <String>['Cash', 'Card'];
 final oCcy = NumberFormat("#,##0", "en_US");
 
 class Cart extends StatefulWidget {
-  const Cart({super.key});
+  final String foodName;
+  final int foodPrice;
+  int quantity;
+  final String restoName;
+  final String foodImage;
+
+  Cart({
+    required this.foodName,
+    required this.foodPrice,
+    required this.quantity, 
+    required this.restoName, 
+    required this.foodImage, 
+  });
 
   @override
-  State<Cart> createState() => _CartState();
+  _CartState createState() => _CartState();
 }
+
+
 
 class _CartState extends State<Cart> {
   int _selectedIndex = 2;
-  int _count = 0;
+  int totalPrice = 0;
+  int dfee = 10000;
+  int sfee = 5000;
+  TextEditingController noteController = TextEditingController();
+  String paymentMethod = 'Cash';
+
+  @override
+  void initState() {
+    super.initState();
+    calculateTotalPrice();
+  }
+
+  void calculateTotalPrice() {
+    int price = widget.foodPrice;
+    totalPrice = price * widget.quantity;
+  }
+
+  void _incrementQuantity() {
+  setState(() {
+    widget.quantity++;
+    totalPrice = widget.foodPrice * widget.quantity;
+  });
+}
+
+void _decrementQuantity() {
+  setState(() {
+    if (widget.quantity > 0) {
+      widget.quantity--;
+      totalPrice = widget.foodPrice * widget.quantity;
+    }
+  });
+}
 
   void _onTappedBottomNav(int index) {
-    List menuBottomNav = [gofood(), History(), Cart(), Profile()];
+    List menuBottomNav = [gofood(), History(), Cart(
+                                foodName: "Ayam",
+                                foodPrice: 10000,
+                                quantity: 1,
+                                restoName: 'KFC',
+                                foodImage: 'assets/images/kuliner/bakso-mie.jpg',
+                              ), Profile()];
     if (index != _selectedIndex) {
       setState(() {
         _selectedIndex = index;
@@ -92,7 +142,7 @@ class _CartState extends State<Cart> {
                         child: Text(
                           'Jalan Permata ujung No. 13', 
                           style: TextStyle(fontWeight: FontWeight.bold), 
-                          overflow: TextOverflow.fade,
+                          overflow: TextOverflow.ellipsis,
                           softWrap: false
                         ),
                       ),
@@ -114,7 +164,7 @@ class _CartState extends State<Cart> {
             );
     }
 
-    Widget cartOrder(String name, int price, String image) {
+    Widget cartOrder(String name, int price, String image, int quantity) {
     return Padding(
                       padding: EdgeInsets.only(left: 20, right: 20),
                       child: Material(
@@ -151,7 +201,38 @@ class _CartState extends State<Cart> {
                                   SizedBox(height: 10,),
                                   Text(name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                                   SizedBox(height: 30,),
-                                  Counter(),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        onTap: _decrementQuantity,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(3.0),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            shape: BoxShape.rectangle,
+                                            borderRadius: BorderRadius.circular(5)
+                                          ),
+                                          child: Icon(Icons.remove, color: Colors.black, size: 18,),
+                                        ),
+                                      ),
+                                      SizedBox(width: 15.0),
+                                      Text(widget.quantity.toString(), style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),),
+                                      SizedBox(width: 15.0),
+                                      GestureDetector(
+                                        onTap: _incrementQuantity,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(3.0),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            shape: BoxShape.rectangle,
+                                            borderRadius: BorderRadius.circular(5)
+                                          ),
+                                          child: Icon(Icons.add, color: Colors.black, size: 18,),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   SizedBox(height: 10,),
                                 ],
                               ),
@@ -162,7 +243,7 @@ class _CartState extends State<Cart> {
                                   SizedBox(height: 5,),
                                   Text('Rp ${oCcy.format(price)}', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
                                   SizedBox(height: 40,),
-                                  Text('Rp ${oCcy.format(price * _count)}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                                  Text('Rp ${oCcy.format(price * widget.quantity)}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                                   SizedBox(height: 5,),
                                 ],
                               ),
@@ -185,8 +266,8 @@ class _CartState extends State<Cart> {
         GestureDetector(
           onTap: () {
             setState(() {
-              if (_count > 0){
-                _count -= 1;
+              if (widget.quantity > 0){
+                widget.quantity -= 1;
               }
               
             });
@@ -203,12 +284,12 @@ class _CartState extends State<Cart> {
           ),
         ),
         SizedBox(width: 15.0),
-        Text("$_count", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),),
+        Text("$widget.quantity", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),),
         SizedBox(width: 15.0),
         GestureDetector(
           onTap: () {
             setState(() {
-              _count += 1;
+              widget.quantity += 1;
             });
           },
           child: Container(
@@ -249,10 +330,10 @@ String dropdownValue = list.first;
                     SizedBox(height: 5),
                     Address(),
                     SizedBox(height: 20),
-                    cartOrder('Bakso Komplit', 15000, 'assets/images/kuliner/bakso-mie.jpg'),
+                    cartOrder(widget.foodName, widget.foodPrice, widget.foodImage, widget.quantity),
                     
                     SizedBox(height: 10),
-                    cartOrder('Bakso Mercon', 25000, 'assets/images/kuliner/bakso-mie.jpg'),
+                    // cartOrder('Bakso Mercon', 25000, 'assets/images/kuliner/bakso-mie.jpg'),
 
 
                     SizedBox(height: 20),
@@ -277,23 +358,23 @@ String dropdownValue = list.first;
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Items Total: '),
-                              Text('Rp 290.000', style: TextStyle(fontWeight: FontWeight.bold),)
+                              Text('Rp ${oCcy.format(totalPrice)}', style: TextStyle(fontWeight: FontWeight.bold),)
                             ],
                           ),
                           SizedBox(height: 5,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Delivery Services:'),
-                              Text('Rp 5.000', style: TextStyle(fontWeight: FontWeight.bold),)
+                              Text('Delivery fee:'),
+                              Text('Rp ${oCcy.format(dfee)}', style: TextStyle(fontWeight: FontWeight.bold),)
                             ],
                           ),
                           SizedBox(height: 5,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Tax:'),
-                              Text('Rp 10.000', style: TextStyle(fontWeight: FontWeight.bold),)
+                              Text('Service fee:'),
+                              Text('Rp ${oCcy.format(sfee)}', style: TextStyle(fontWeight: FontWeight.bold),)
                             ],
                           ),
                           SizedBox(height: 30,),
@@ -301,7 +382,7 @@ String dropdownValue = list.first;
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Total:', style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                              Text('Rp 305.000', style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)
+                              Text('Rp ${oCcy.format(totalPrice + dfee + sfee)}', style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)
                             ],
                           ),
                           

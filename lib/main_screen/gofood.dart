@@ -5,7 +5,7 @@ import 'package:food_delivery/data/resto_data.dart';
 import 'package:food_delivery/model/resto_model.dart';
 import 'package:food_delivery/widget/main_screen_widget.dart';
 import 'package:food_delivery/main_screen/Profile.dart';
-import 'package:food_delivery/main_screen/Cart.dart';
+import 'package:food_delivery/main_screen/cart.dart';
 import 'package:food_delivery/main_screen/History.dart';
 
 class gofood extends StatefulWidget {
@@ -21,7 +21,13 @@ class _gofoodState extends State<gofood> {
   var _horizontalPadding = 10.0;
 
   void _onTappedBottomNav(int index) {
-    List menuBottomNav = [gofood(), History(), Cart(), Profile()];
+    List menuBottomNav = [gofood(), History(), Cart(
+                                foodName: "Ayam",
+                                foodPrice: 10000,
+                                quantity: 1,
+                                restoName: 'KFC',
+                                foodImage: 'assets/images/kuliner/bakso-mie.jpg',
+                              ), Profile()];
     if (index != _selectedIndex) {
       setState(() {
         _selectedIndex = index;
@@ -213,11 +219,12 @@ class _gofoodState extends State<gofood> {
                                     .toList()
                                     .map((resto) {
                                   return RestoCardMarkotop(
-                                    restoName: resto.restoName,
-                                    rating: resto.restoRating,
-                                    penilai: resto.restoJudges,
-                                    resto: resto,
-                                  );
+                                  restoName: resto.restoName,
+                                  rating: resto.restoRating,
+                                  penilai: resto.restoJudges,
+                                  restoImage: resto.restoImage,
+                                  resto: resto,
+                                );
                                 }).toList(),
                               ),
                             ),
@@ -254,15 +261,16 @@ class _gofoodState extends State<gofood> {
                             itemBuilder: (context, index) {
                               final RestoModel resto = restoDataList[index];
                               return UniversalContent(
-                                jarakResto: resto.restoDistance,
-                                rating: resto.restoRating,
-                                categoryResto: resto.restoCategory.join(", "),
-                                restoPlace: resto.restoLocation,
-                                restoName: resto.restoName,
-                                estMin: resto.estMinimum,
-                                estMax: resto.estMaximum,
-                                resto: resto,
-                              );
+                                  jarakResto: resto.restoDistance,
+                                  rating: resto.restoRating,
+                                  categoryResto: resto.restoCategory.join(", "),
+                                  restoPlace: resto.restoLocation,
+                                  restoName: resto.restoName,
+                                  restoImage: resto.restoImage,
+                                  estMin: resto.estMinimum,
+                                  estMax: resto.estMaximum,
+                                  resto: resto,
+                                );
                             },
                           )
                         ],

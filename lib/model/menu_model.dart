@@ -2,7 +2,7 @@ class MenuModel {
   String foodImage;
   String foodMenu;
   String foodDescription;
-  String foodPrice;
+  int foodPrice;
   bool isFoodAvailable;
 
   MenuModel({

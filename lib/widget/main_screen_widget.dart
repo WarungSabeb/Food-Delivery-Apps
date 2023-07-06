@@ -9,6 +9,7 @@ class RestoCardMarkotop extends StatelessWidget {
   final restoName;
   final rating;
   final penilai;
+  final restoImage;
 
   final resto;
 
@@ -17,21 +18,24 @@ class RestoCardMarkotop extends StatelessWidget {
     required this.restoName,
     required this.rating,
     required this.penilai,
+    required this.restoImage,
     required this.resto,
   }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return RestoScreen(data: resto);
-            },
-          ),
-        );
+      onTap: () {Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return RestoScreen(data: resto);
+
+                },
+              ),
+            );
+        
       },
       child: SizedBox(
         height: 170,
@@ -51,29 +55,17 @@ class RestoCardMarkotop extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(8),
                       child: Image.asset(
-                        'assets/images/resto/default.jpg',
+                        restoImage,
                         height: 100,
-                        width: 190,
+                        width: 180,
                         fit: BoxFit.fitWidth,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 35),
-                      child: Text(
-                        restoName,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
-                        textAlign: TextAlign.center,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Padding(
@@ -84,7 +76,7 @@ class RestoCardMarkotop extends StatelessWidget {
                     children: [
                       Text(
                         restoName,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w900,
                           fontSize: 14,
                         ),
@@ -92,18 +84,18 @@ class RestoCardMarkotop extends StatelessWidget {
                         overflow: TextOverflow.clip,
                         textAlign: TextAlign.left,
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.star,
                             size: 15,
                             color: Colors.orange,
                           ),
-                          SizedBox(width: 3),
+                          const SizedBox(width: 3),
                           Text(
                             '$rating - $penilai rating',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 11,
                             ),
                           )
@@ -299,6 +291,7 @@ class UniversalContent extends StatelessWidget {
   final jarakResto;
   final rating;
   final categoryResto;
+  final restoImage;
   final restoPlace;
   final restoName;
   final estMin;
@@ -312,6 +305,7 @@ class UniversalContent extends StatelessWidget {
     required this.rating,
     required this.categoryResto,
     required this.restoPlace,
+    required this.restoImage,
     required this.restoName,
     required this.estMin,
     required this.estMax,
@@ -329,6 +323,7 @@ class UniversalContent extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) {
                   return RestoScreen(data: resto);
+
                 },
               ),
             );
@@ -344,25 +339,16 @@ class UniversalContent extends StatelessWidget {
                     alignment: Alignment.center,
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(20),
                         child: Image.asset(
-                          'assets/images/resto/default_cropped.jpg',
-                          height: 100,
+                          restoImage,
+                        height: 120,
+                        width: 180,
+                        fit: BoxFit.fitWidth,
+                    
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          restoName,
-                          maxLines: 2,
-                          overflow: TextOverflow.clip,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )
+                     
                     ],
                   ),
                 ),
@@ -377,26 +363,26 @@ class UniversalContent extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           '$restoName, $restoPlace',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w900,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.star,
                               size: 17,
                               color: Colors.orange,
                             ),
-                            SizedBox(width: 5),
+                            const SizedBox(width: 5),
                             Flexible(
                               child: Text(
                                 '$rating - $categoryResto',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 12,
                                 ),
                                 maxLines: 1,
@@ -405,22 +391,22 @@ class UniversalContent extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         RichText(
                           text: TextSpan(
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               color: Colors.black,
                             ),
                             children: [
                               TextSpan(
-                                text: '$jarakResto km ',
-                                style: TextStyle(
+                                text: 'Delivery in $estMin min  \u00B7  ',
+                                style: const TextStyle(
                                   fontWeight: FontWeight.w900,
                                 ),
                               ),
                               TextSpan(
-                                text: '($estMin - $estMax menit)',
+                                text: '$jarakResto km ',
                               ),
                             ],
                           ),
@@ -433,7 +419,7 @@ class UniversalContent extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
       ],
     );
   }

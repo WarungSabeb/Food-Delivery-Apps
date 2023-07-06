@@ -1,11 +1,12 @@
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_typing_uninitialized_variables
+// ignore_for_file: curly_braces_in_flow_control_structures, sort_child_properties_last, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:food_delivery/main_screen/cart.dart';
 
 class MenuListUnvailable extends StatelessWidget {
-  final foodImage;
-  final foodName;
-  final foodDetail;
+  final String foodImage;
+  final String foodName;
+  final String foodDetail;
 
   const MenuListUnvailable({
     Key? key,
@@ -13,6 +14,7 @@ class MenuListUnvailable extends StatelessWidget {
     required this.foodName,
     required this.foodDetail,
   }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,11 +87,12 @@ class MenuListUnvailable extends StatelessWidget {
   }
 }
 
-class MenuListAvailable extends StatelessWidget {
-  final foodImage;
-  final foodName;
-  final foodDetail;
-  final foodPrice;
+class MenuListAvailable extends StatefulWidget {
+  final String foodImage;
+  final String foodName;
+  final String foodDetail;
+  final int foodPrice;
+  final String restoName;
 
   MenuListAvailable({
     Key? key,
@@ -97,7 +100,185 @@ class MenuListAvailable extends StatelessWidget {
     required this.foodName,
     required this.foodDetail,
     required this.foodPrice,
+    required this.restoName,
   }) : super(key: key);
+
+  @override
+  _MenuListAvailableState createState() => _MenuListAvailableState();
+}
+
+class _MenuListAvailableState extends State<MenuListAvailable> {
+  int _quantity = 0;
+  // ignore: unused_field
+  int _totalPrice = 0;
+
+void _incrementQuantity() {
+  setState(() {
+    _quantity++;
+    _totalPrice = widget.foodPrice * _quantity;
+  });
+}
+
+void _decrementQuantity() {
+  setState(() {
+    if (_quantity > 0) {
+      _quantity--;
+      _totalPrice = widget.foodPrice * _quantity;
+    }
+  });
+}
+
+  Future<void> _orderBottomModalForm(BuildContext context) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext bc) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              height: MediaQuery.of(bc).size.height * 0.9,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                  vertical: 20,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Image.asset(
+                                  widget.foodImage,
+                                  height:
+                                      MediaQuery.of(context).size.height * .3,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              widget.foodName,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              widget.foodDetail,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 12),
+                            ),
+                            SizedBox(height: 5),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Quantity: $_quantity',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: _decrementQuantity,
+                          icon: Icon(Icons.remove_circle_outline),
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          '$_quantity',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(width: 10),
+                        IconButton(
+                          onPressed: _incrementQuantity,
+                          icon: Icon(
+                            Icons.add_circle_outline,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Text(
+                      'Total Harga: Rp. ${oCcy.format(_totalPrice)}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    Text(
+                      'Rp. ${oCcy.format(widget.foodPrice)}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        if (_quantity > 0) 
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Cart(
+                                foodName: widget.foodName,
+                                foodPrice: widget.foodPrice,
+                                quantity: _quantity,
+                                restoName: widget.restoName,
+                                foodImage: widget.foodImage,
+                              ),
+                            ),
+                          );
+                        
+                      },
+                      child: Text(
+                        'Pesan Sekarang',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.green.shade700),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                            side: BorderSide(color: Colors.green),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,13 +286,7 @@ class MenuListAvailable extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            _orderBottomModalForm(
-              context,
-              foodImage,
-              foodName,
-              foodDetail,
-              foodPrice,
-            );
+            _orderBottomModalForm(context);
           },
           child: Container(
             child: Row(
@@ -126,7 +301,7 @@ class MenuListAvailable extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Text(
-                        foodName,
+                        widget.foodName,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w900,
@@ -136,7 +311,7 @@ class MenuListAvailable extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        foodDetail,
+                        widget.foodDetail,
                         style: TextStyle(
                           fontSize: 13,
                         ),
@@ -145,7 +320,7 @@ class MenuListAvailable extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Rp. $foodPrice',
+                        'Rp. ${oCcy.format(widget.foodPrice)}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
@@ -159,7 +334,7 @@ class MenuListAvailable extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(30),
                     child: Image.asset(
-                      foodImage,
+                      widget.foodImage,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -172,202 +347,13 @@ class MenuListAvailable extends StatelessWidget {
       ],
     );
   }
-
-  void _orderBottomModalForm(
-    BuildContext context,
-    String foodImage,
-    String foodName,
-    String foodDetail,
-    String foodPrice,
-  ) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return Container(
-          height: MediaQuery.of(bc).size.height * 0.9,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10.0,
-              vertical: 20,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: Image.asset(
-                              foodImage,
-                              height: MediaQuery.of(context).size.height * .3,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          foodName,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          foodDetail,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 12),
-                        ),
-                        SizedBox(height: 5),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Rp. $foodPrice',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    // Navigator.of(context).pop();
-
-                    
-
-                  //   showModalBottomSheet(
-                  //   context: context,
-                  //   isScrollControlled: true, // Set this flag to allow content overflow
-                  //   builder: (BuildContext context) {
-                  //     return Container(
-                  //       height: MediaQuery.of(context).size.height * 0.2, // Adjust the height as needed
-                  //       child: ListView(
-                  //         // Give the ListView enough space to scroll
-                  //         padding: EdgeInsets.only(
-                  //           bottom: MediaQuery.of(context).viewInsets.bottom,
-                  //         ),
-                  //         children: [
-                  //           Container(
-                  //         height: 100,
-                  //         color: Colors.amber,
-                  //         child: Center(
-                  //           child: Column(
-                  //             mainAxisAlignment: MainAxisAlignment.center,
-                  //             mainAxisSize: MainAxisSize.min,
-                  //             children: <Widget>[
-                  //               const Text('Modal BottomSheet'),
-                  //               ElevatedButton(
-                  //                 child: const Text('Close BottomSheet'),
-                  //                 onPressed: () => Navigator.pop(context),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ),
-                  //       )
-                  //         ],
-                  //       ),
-                  //     );
-                  //   },
-                  // );
-
-                    // showModalBottomSheet<void>(
-                    //   context: context,
-                    //   barrierColor: Colors.transparent,
-                    //   // enableDrag: true,
-                    //   isDismissible: false,
-                    //   builder: (BuildContext context) {
-                    //     return Container(
-                    //       height: 75,
-                    //       color: Colors.white,
-                    //       child: Center(
-                    //         child: Column(
-                    //           mainAxisAlignment: MainAxisAlignment.center,
-                    //           mainAxisSize: MainAxisSize.min,
-                    //           children: <Widget>[
-                    //             // const Text('Modal BottomSheet'),
-                    //             ElevatedButton(
-                    //               child: const Text('Close BottomSheet'),
-                    //               onPressed: () => Navigator.pop(context),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       ),
-                    //     );
-                    //   },
-                    // );
-
-                    final scaffold = ScaffoldMessenger.of(context);
-                    Navigator.of(context).pop();
-                    scaffold.showSnackBar(
-                      SnackBar(
-                        elevation: 10,
-                        duration: Duration(days: 365),
-                        shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                        content: Text(
-                          '$foodName has been ordered!',
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        action: SnackBarAction(
-                          label: 'Ok',
-                          onPressed: scaffold.hideCurrentSnackBar,
-                          textColor: Colors.white,
-                        ),
-                        backgroundColor: Colors.green.shade700,
-                      ),
-                    );
-
-
-                  },
-
-
-                  child: Text(
-                    'Pesan Sekarang',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.green.shade700),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        side: BorderSide(color: Colors.green),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
 }
 
 class RestoReviewWidget extends StatelessWidget {
-  final keterangan;
-  final iconsValue;
-  final iconsColor;
-  final icons;
+  final String keterangan;
+  final String iconsValue;
+  final Color iconsColor;
+  final IconData icons;
 
   RestoReviewWidget({
     Key? key,

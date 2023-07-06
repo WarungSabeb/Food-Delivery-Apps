@@ -111,7 +111,7 @@ class RestoScreen extends StatelessWidget {
                           RestoReviewWidget(
                             keterangan: 'Distance',
                             iconsValue: '${data.restoDistance} km',
-                            iconsColor: Colors.redAccent[700],
+                            iconsColor: Colors.orange,
                             icons: Icons.location_on,
                           ),
                           VerticalDivider(
@@ -123,7 +123,7 @@ class RestoScreen extends StatelessWidget {
                           RestoReviewWidget(
                             keterangan: 'Price',
                             iconsValue: '< ${data.restoEstPrice}',
-                            iconsColor: Colors.redAccent[700],
+                            iconsColor: Colors.orange,
                             icons: Icons.monetization_on,
                           ),
                           VerticalDivider(
@@ -135,7 +135,7 @@ class RestoScreen extends StatelessWidget {
                           RestoReviewWidget(
                             keterangan: 'Great taste',
                             iconsValue: '100+ ratings',
-                            iconsColor: Colors.redAccent[700],
+                            iconsColor: Colors.orange,
                             icons: Icons.thumb_up,
                           ),
                           VerticalDivider(
@@ -146,7 +146,7 @@ class RestoScreen extends StatelessWidget {
                           RestoReviewWidget(
                             keterangan: 'Value for money',
                             iconsValue: '100+ rating',
-                            iconsColor: Colors.redAccent[700],
+                            iconsColor: Colors.orange,
                             icons: Icons.rice_bowl_rounded,
                           ),
                         ],
@@ -173,7 +173,8 @@ class RestoScreen extends StatelessWidget {
                                 foodImage: menu.foodImage,
                                 foodName: menu.foodMenu,
                                 foodDetail: menu.foodDescription,
-                                foodPrice: menu.foodPrice,
+                                foodPrice: menu.foodPrice, 
+                                restoName: data.restoName,
                               )
                             : MenuListUnvailable(
                                 foodImage: menu.foodImage,
