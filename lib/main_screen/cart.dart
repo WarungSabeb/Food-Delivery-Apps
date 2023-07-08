@@ -149,7 +149,9 @@ void _decrementQuantity() {
                   ),
                   SizedBox(width: 90,),
                   OutlinedButton(
-                    onPressed: () {database.deleteDatabase();}, 
+                    onPressed: () {
+                      // database.deleteDatabase();
+                    }, 
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: Colors.pink),
                     ),
