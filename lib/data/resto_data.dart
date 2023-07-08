@@ -31,9 +31,9 @@ var restoDataList = [
       ),
       MenuModel(
         foodImage: 'assets/images/kuliner/bakso-mie.jpg',
-        foodMenu: 'Bakso Komplit',
-        foodDescription: 'Bakso Malang Komplit',
-        foodPrice: 15000,
+        foodMenu: 'Bakso Komplit Urat',
+        foodDescription: 'Bakso Malang Urat',
+        foodPrice: 20000,
         isFoodAvailable: true,
       ),
       MenuModel(

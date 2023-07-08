@@ -1,6 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:food_delivery/main_screen/gofood.dart';
 import 'package:flutter/services.dart';
+import 'package:food_delivery/main_screen/signup.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -11,6 +14,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final phone = TextEditingController();
+  final password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -56,6 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           
                           child: TextField(
+                            controller: phone,
                             keyboardType: TextInputType.number,
                             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                             style: TextStyle(color: Colors.black),
@@ -87,8 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                           
-                          child: const TextField(
-                            
+                          child: TextField(
+                            controller: password,
                             obscureText: true,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
@@ -108,9 +116,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           alignment: Alignment.center,
                           child: GestureDetector(
                           onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(
-                                    builder: (context) => gofood()));
+                            // Navigator.push(context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => gofood()));
+                           final scaffold = ScaffoldMessenger.of(context);
+                           scaffold.showSnackBar(
+                             SnackBar(
+                               duration: Duration(seconds: 1),
+                               content: Text(
+                                 'Wrong Phone Number or Password',
+                                 overflow: TextOverflow.ellipsis,
+                                 style: TextStyle(color: Colors.black),
+                               ),
+                               action: SnackBarAction(
+                                 label: 'Ok',
+                                 onPressed: scaffold.hideCurrentSnackBar,
+                               ),
+                               backgroundColor: Colors.white,
+                             ),
+                           );
                           },
                           child: Container(
                             width: 200,
@@ -131,10 +155,26 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
+                          
                         ),
                         ),
-                        const SizedBox(height: 35),
-                        const SizedBox(height: 20),
+                        Container(
+                          alignment: Alignment.center,
+                          child:TextButton(
+                            onPressed: () {
+                                Navigator.push(context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignUpScreen()));
+                            }, 
+                            child: Text(
+                              'DONT HAVE AN ACCOUNT? SIGN UP',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 12
+                              ),
+                            )
+                          ),
+                        ),
                       ],
                     ),
                   ),

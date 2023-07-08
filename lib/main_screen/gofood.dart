@@ -5,8 +5,8 @@ import 'package:food_delivery/data/resto_data.dart';
 import 'package:food_delivery/model/resto_model.dart';
 import 'package:food_delivery/widget/main_screen_widget.dart';
 import 'package:food_delivery/main_screen/Profile.dart';
-import 'package:food_delivery/main_screen/cart.dart';
 import 'package:food_delivery/main_screen/History.dart';
+import 'package:food_delivery/global.dart' as global;
 
 class gofood extends StatefulWidget {
   gofood({Key? key}) : super(key: key);
@@ -21,13 +21,7 @@ class _gofoodState extends State<gofood> {
   var _horizontalPadding = 10.0;
 
   void _onTappedBottomNav(int index) {
-    List menuBottomNav = [gofood(), History(), Cart(
-                                foodName: "Ayam",
-                                foodPrice: 10000,
-                                quantity: 1,
-                                restoName: 'KFC',
-                                foodImage: 'assets/images/kuliner/bakso-mie.jpg',
-                              ), Profile()];
+    List menuBottomNav = [gofood(), History(), Profile()];
     if (index != _selectedIndex) {
       setState(() {
         _selectedIndex = index;
@@ -59,7 +53,7 @@ class _gofoodState extends State<gofood> {
                   Row(
                     children: [
                       Text(
-                        'Hi Buddies',
+                        'Hi ${global.username}',
                         style: TextStyle(
                           fontSize: 13,
                         ),
@@ -302,10 +296,6 @@ class _gofoodState extends State<gofood> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.receipt_long, size: 35),
                 label: 'History',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart, size: 35),
-                label: 'Cart',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person, size: 35),

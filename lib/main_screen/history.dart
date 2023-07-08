@@ -1,13 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:food_delivery/main_screen/Profile.dart';
-import 'package:food_delivery/main_screen/cart.dart';
-import 'package:food_delivery/main_screen/history.dart';
 import 'package:food_delivery/main_screen/gofood.dart';
+import 'package:intl/intl.dart';
+import 'package:food_delivery/database/database.dart';
 
-
+final oCcy = NumberFormat("#,##0", "en_US");
 class History extends StatefulWidget {
   const History({super.key});
 
@@ -17,18 +16,21 @@ class History extends StatefulWidget {
 
 class _HistoryState extends State<History> {
   int _selectedIndex = 1;
+  final AppDb database = AppDb();
+  DateTime now = DateTime.now();
+  List<OrderData> orders = [];
 
   final List<Map> runner = [
     {
       'restaurant': 'Pizza Hut',
       'date': '25 Jun 2023, 17:32',
-      'price': 'Rp66.500',
+      'price': 66500,
       'status' : 'On The Way'
     },
     {
       'restaurant': 'Burger King',
       'date': '25 Jun 2023, 17:13',
-      'price': 'Rp58.000',
+      'price': 58000,
       'status' : 'At The Restaurant'
     },
   ];
@@ -37,23 +39,17 @@ class _HistoryState extends State<History> {
     {
       'restaurant': 'Pizza Hut',
       'date': '22 Jun 2023, 17:32',
-      'price': 'Rp86.500',
+      'price': 86500,
     },
     {
       'restaurant': 'Burger King',
       'date': '20 Jun 2023, 04:20',
-      'price': 'Rp108.000',
+      'price': 108000,
     },
   ];
 
   void _onTappedBottomNav(int index) {
-    List menuBottomNav = [gofood(), History(), Cart(
-                                foodName: "Ayam",
-                                foodPrice: 10000,
-                                quantity: 1,
-                                restoName: 'KFC',
-                                foodImage: 'assets/images/kuliner/bakso-mie.jpg',
-                              ), Profile()];
+    List menuBottomNav = [gofood(), History(), Profile()];
     if (index != _selectedIndex) {
       setState(() {
         _selectedIndex = index;
@@ -85,16 +81,6 @@ class _HistoryState extends State<History> {
                       fontWeight: FontWeight.bold,
                     ),
             ),
-
-            // SizedBox(width: 25),
-
-            // IconButton(
-            //   onPressed: () {}, 
-            //   icon: Icon(Icons.shopping_cart_outlined,)
-            // ),
-
-            
-            
           ],
         ),
       ),
@@ -122,14 +108,24 @@ class _HistoryState extends State<History> {
           )
         ),
         Expanded( 
-
-          // height: 492,
           child: TabBarView(children: [
 
             ListView(
               children: [
-                for (final runner in runner)
-                _running(runner['restaurant'], runner['date'], runner['price'], runner['status']),
+                Container(
+                      height:MediaQuery.of(context).size.height - 180,
+                      child: ListView.builder(
+                       itemCount: orders.length,
+                       itemBuilder: (context, index) {
+                         return Column(
+                           children: [
+                             _running(index),
+ 
+                           ],
+                         );
+                       },
+                     ),
+                    ),
                 ],
             ),
             ListView(
@@ -148,7 +144,9 @@ class _HistoryState extends State<History> {
 
 
 
-Widget _running(String restaurant, String date, String price, String status) {
+Widget _running(int index) {
+  final order = orders[index];
+  String convertedDateTime = "${order.orderTime.year.toString()}-${order.orderTime.month.toString().padLeft(2,'0')}-${order.orderTime.day.toString().padLeft(2,'0')} ${order.orderTime.hour.toString().padLeft(2,'0')}:${order.orderTime.minute.toString().padLeft(2,'0')}";
     return Padding(
       padding: EdgeInsets.only(top: 5.0),
       child: Card(
@@ -161,12 +159,12 @@ Widget _running(String restaurant, String date, String price, String status) {
             child: Icon( Icons.fastfood, color: Colors.white,),
           ),
           title: Text(
-            restaurant,
+            order.restoName,
             overflow: TextOverflow.fade,
             softWrap: false,
           ),
           subtitle: Text(
-            date,
+            convertedDateTime.toString(),
             overflow: TextOverflow.fade,
             softWrap: false,
           ),
@@ -175,9 +173,9 @@ Widget _running(String restaurant, String date, String price, String status) {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               SizedBox(height: 10),
-              Text(price),
+              Text('Rp ${oCcy.format(order.price)}'),
               SizedBox(height: 5),
-              Text(status),
+              Text('Making Your Order'),
             ],
           ),
         ),
@@ -188,7 +186,7 @@ Widget _running(String restaurant, String date, String price, String status) {
 
 
 
-Widget _history(String restaurant, String date, String price) {
+Widget _history(String restaurant, String date, int price) {
     return Padding(
       padding: EdgeInsets.only(top: 5.0),
       child: Card(
@@ -216,7 +214,7 @@ Widget _history(String restaurant, String date, String price) {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               // SizedBox(height: 10),
-              Text(price),
+              Text('Rp ${oCcy.format(price)}'),
               // SizedBox(height: 5),
               // Text('On The Way'),
             ],
@@ -231,6 +229,11 @@ Widget _history(String restaurant, String date, String price) {
 
   @override
   Widget build(BuildContext context) {
+    database.getAllOrders().then((fetchedOrders) {
+      setState(() {
+        orders = fetchedOrders;
+      });
+    });
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -245,6 +248,22 @@ Widget _history(String restaurant, String date, String price) {
             
             Expanded(
               child: _tabSection(context),
+              // child: Container(
+              //     color: Colors.white,
+              //         height:MediaQuery.of(context).size.height - 180,
+              //         child: ListView.builder(
+              //          itemCount: orders.length,
+              //          itemBuilder: (context, index) {
+              //            return Column(
+              //              children: [
+              //                _running(index),
+              //                SizedBox(height: 20,)
+ 
+              //              ],
+              //            );
+              //          },
+              //        ),
+              //       ),
               )
             
             
@@ -269,10 +288,6 @@ Widget _history(String restaurant, String date, String price) {
               BottomNavigationBarItem(
                 icon: Icon(Icons.receipt_long, size: 35),
                 label: 'History',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart, size: 35),
-                label: 'Cart',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person, size: 35),

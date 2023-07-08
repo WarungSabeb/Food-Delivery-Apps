@@ -1,8 +1,10 @@
+// ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:food_delivery/main_screen/login.dart';
 import 'package:flutter/services.dart';
 import 'package:food_delivery/main_screen/gofood.dart';
-import 'package:food_delivery/main_screen/history.dart';
+import 'package:food_delivery/database/database.dart';
+import 'package:food_delivery/global.dart' as global;
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -12,6 +14,54 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final email = TextEditingController();
+  final password = TextEditingController();
+  final phone = TextEditingController();
+  final name = TextEditingController();
+
+  final AppDb database = AppDb();
+
+  //   Future insert(
+  //     TextEditingController email, 
+  //     TextEditingController password, 
+  //     TextEditingController phone, 
+  //     TextEditingController name,) async {
+  //   final row = await database.into(database.user).insertReturning(
+  //       UserCompanion.insert(
+  //         email: email.text,
+  //         password: password.text,
+  //         phone: phone.text,
+  //         name: name.text
+  //         )
+  //       );
+  // }
+//   Future insert(
+//     TextEditingController email,
+//     TextEditingController password,
+//     TextEditingController phone,
+//     TextEditingController name,
+// ) async {
+//     final existingRecord = await database.user
+//         .select(database.user)
+//         .where((user) => user.phone.equals(phone.text))
+//         .getSingleOrNull();
+
+//     if (existingRecord != null) {
+//         // A record with the same phone number already exists
+//         // You can handle this case, such as showing an error message or taking appropriate action
+//         return;
+//     }
+
+//     final row = await database.into(database.user).insertReturning(
+//         UserCompanion.insert(
+//             email: email.text,
+//             password: password.text,
+//             phone: phone.text,
+//             name: name.text,
+//         ),
+//     );
+// }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -36,7 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
 
-                        Container(
+                        SizedBox(
                           width: 150,
                           height: MediaQuery.of(context).size.height / 3,
                           child: Image.asset('assets/images/tasty.jpg'),
@@ -55,7 +105,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ],
                           ),
                           
-                          child: const TextField(
+                          child: TextField(
+                            controller: email,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
                               border: InputBorder.none,
@@ -85,7 +136,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ],
                           ),
                           
-                          child: const TextField(
+                          child: TextField(
+                            controller: password,
                             obscureText: true,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
@@ -116,6 +168,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           
                           child: TextField(
+                            controller: phone,
                             keyboardType: TextInputType.number,
                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                             style: TextStyle(color: Colors.black),
@@ -146,7 +199,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ],
                           ),
                           
-                          child: const TextField(
+                          child: TextField(
+                            controller: name,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
                               border: InputBorder.none,
@@ -165,6 +219,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           alignment: Alignment.center,
                           child: GestureDetector(
                           onTap: () {
+                            global.username = name.text;
+                            global.useremail = email.text;
+                            global.userphone = phone.text;
+                            // insert(email, password, phone, name);
                             Navigator.push(context,
                                 MaterialPageRoute(
                                     builder: (context) => gofood()));

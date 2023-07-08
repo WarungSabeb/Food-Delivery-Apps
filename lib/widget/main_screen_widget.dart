@@ -127,22 +127,22 @@ class IconCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        final scaffold = ScaffoldMessenger.of(context);
-        scaffold.showSnackBar(
-          SnackBar(
-            duration: Duration(seconds: 1),
-            content: Text(
-              '$iconTitle\'s Menu Selected!',
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Colors.red),
-            ),
-            action: SnackBarAction(
-              label: 'Ok',
-              onPressed: scaffold.hideCurrentSnackBar,
-            ),
-            backgroundColor: Colors.white,
-          ),
-        );
+        // final scaffold = ScaffoldMessenger.of(context);
+        // scaffold.showSnackBar(
+        //   SnackBar(
+        //     duration: Duration(seconds: 1),
+        //     content: Text(
+        //       '$iconTitle\'s Menu Selected!',
+        //       overflow: TextOverflow.ellipsis,
+        //       style: TextStyle(color: Colors.red),
+        //     ),
+        //     action: SnackBarAction(
+        //       label: 'Ok',
+        //       onPressed: scaffold.hideCurrentSnackBar,
+        //     ),
+        //     backgroundColor: Colors.white,
+        //   ),
+        // );
       },
       child: SizedBox(
         width: 100,
@@ -250,7 +250,6 @@ class SearchBox extends StatefulWidget {
 }
 
 class _SearchBoxState extends State<SearchBox> {
-  TextEditingController _textEditingController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return 

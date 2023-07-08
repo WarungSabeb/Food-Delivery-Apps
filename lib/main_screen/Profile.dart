@@ -2,11 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:food_delivery/main_screen/signup.dart';
-import 'package:flutter/services.dart';
-import 'package:food_delivery/main_screen/Profile.dart';
-import 'package:food_delivery/main_screen/cart.dart';
 import 'package:food_delivery/main_screen/history.dart';
 import 'package:food_delivery/main_screen/gofood.dart';
+import 'package:food_delivery/global.dart' as global;
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -21,13 +19,7 @@ class _ProfileState extends State<Profile> {
   int _selectedIndex = 3;
 
   void _onTappedBottomNav(int index) {
-    List menuBottomNav = [gofood(), History(), Cart(
-                                foodName: "Ayam",
-                                foodPrice: 10000,
-                                quantity: 1,
-                                restoName: 'KFC',
-                                foodImage: 'assets/images/kuliner/bakso-mie.jpg',
-                              ), Profile()];
+    List menuBottomNav = [gofood(), History(), Profile()];
     if (index != _selectedIndex) {
       setState(() {
         _selectedIndex = index;
@@ -93,7 +85,7 @@ class _ProfileState extends State<Profile> {
                             ],
                           ),
                           
-                          child: const TextField(
+                          child: TextField(
                             enabled: false,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
@@ -111,7 +103,7 @@ class _ProfileState extends State<Profile> {
                               ),
 
                               ),
-                              hintText: '    Mr. X',
+                              hintText: '    ${global.username}',
                               hintStyle: TextStyle(color: Colors.black),
                             ),
                           ),
@@ -133,7 +125,7 @@ class _ProfileState extends State<Profile> {
                             ],
                           ),
                           
-                          child: const TextField(
+                          child: TextField(
                             enabled: false,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
@@ -151,7 +143,7 @@ class _ProfileState extends State<Profile> {
                               ),
 
                               ),
-                              hintText: '    Email@email.com',
+                              hintText: '    ${global.useremail}',
                               hintStyle: TextStyle(color: Colors.black),
                             ),
                           ),
@@ -172,7 +164,7 @@ class _ProfileState extends State<Profile> {
                             ],
                           ),
                           
-                          child: const TextField(
+                          child: TextField(
                             enabled: false,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
@@ -190,47 +182,7 @@ class _ProfileState extends State<Profile> {
                               ),
 
                               ),
-                              hintText: '    081289614330',
-                              hintStyle: TextStyle(color: Colors.black),
-                            ),
-                          ),
-                        ),
-
-                         const SizedBox(height: 20),
-
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 1,
-                                blurRadius: 1,
-                                offset: const Offset(0, 1),
-                              ),
-                            ],
-                          ),
-                          
-                          child: const TextField(
-                            enabled: false,
-                            style: TextStyle(color: Colors.black),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              prefixIcon: Padding(
-                                padding:  EdgeInsets.only(left: 5),
-                                child: CircleAvatar(
-                                radius: 5,
-                                backgroundColor: Color.fromRGBO(255,38,116,0.49),
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: Colors.white,
-                                  size: 25,
-                                  ),
-                              ),
-
-                              ),
-                              hintText: '    Address',
+                              hintText: '    ${global.userphone}',
                               hintStyle: TextStyle(color: Colors.black),
                             ),
                           ),
@@ -242,6 +194,10 @@ class _ProfileState extends State<Profile> {
                           alignment: Alignment.center,
                           child: GestureDetector(
                           onTap: () {
+                            global.username = '';
+                            global.useremail = '';
+                            global.userphone = '';
+
                             Navigator.push(context,
                                 MaterialPageRoute(
                                     builder: (context) => SignUpScreen()));
@@ -260,7 +216,7 @@ class _ProfileState extends State<Profile> {
                             ],
                           ),
                           
-                          child: const TextField(
+                          child: TextField(
                             enabled: false,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
@@ -314,15 +270,11 @@ class _ProfileState extends State<Profile> {
                 label: 'History',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart, size: 35),
-                label: 'Cart',
-              ),
-              BottomNavigationBarItem(
                 icon: Icon(Icons.person, size: 35),
                 label: 'Profile',
               ),
             ],
-            currentIndex: 3,
+            currentIndex: 2,
             selectedItemColor: Colors.red,
             unselectedItemColor: Colors.black,
             onTap: _onTappedBottomNav,

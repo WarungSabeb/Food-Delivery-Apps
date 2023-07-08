@@ -1,7 +1,10 @@
 // ignore_for_file: curly_braces_in_flow_control_structures, sort_child_properties_last, prefer_const_constructors
 
+import 'package:drift/drift.dart' as drift;
 import 'package:flutter/material.dart';
+import 'package:food_delivery/database/cartDB.dart';
 import 'package:food_delivery/main_screen/cart.dart';
+import 'package:food_delivery/database/database.dart';
 
 class MenuListUnvailable extends StatelessWidget {
   final String foodImage;
@@ -100,8 +103,10 @@ class MenuListAvailable extends StatefulWidget {
     required this.foodName,
     required this.foodDetail,
     required this.foodPrice,
-    required this.restoName,
+    required this.restoName, 
   }) : super(key: key);
+
+  
 
   @override
   _MenuListAvailableState createState() => _MenuListAvailableState();
@@ -111,12 +116,42 @@ class _MenuListAvailableState extends State<MenuListAvailable> {
   int _quantity = 0;
   // ignore: unused_field
   int _totalPrice = 0;
+  final AppDb database = AppDb();
+
+  Future insert(
+    String foodName, 
+    int quantity, 
+    int price, 
+  ) async {
+    final row = await database.into(database.cartDB).insertReturning(
+        CartDBCompanion.insert(foodName: foodName, quantity: quantity, price: price)
+        );
+  }
+
+//   Future<void> updateQuantity(String foodName, int newQuantity) async {
+//   final cartDB = await (select(database.cartDB)..where((tbl) => tbl.foodName.equals(foodName))).getSingle();
+//   if (cartDB != null) {
+//     final updatedCartDB = cartDB.copyWith(quantity: newQuantity);
+//     await update(database.cartDB).replace(updatedCartDB);
+//   }
+// }
+
+
+
 
 void _incrementQuantity() {
+
   setState(() {
     _quantity++;
     _totalPrice = widget.foodPrice * _quantity;
   });
+
+  // if(_quantity == 1) {
+  //   insert(widget.foodName, _quantity, widget.foodPrice)
+
+  // } else {
+
+  // }
 }
 
 void _decrementQuantity() {
@@ -206,7 +241,7 @@ void _decrementQuantity() {
                           onPressed: _incrementQuantity,
                           icon: Icon(
                             Icons.add_circle_outline,
-                            color: Colors.red,
+                            color: Colors.black,
                           ),
                         ),
                       ],
@@ -282,6 +317,7 @@ void _decrementQuantity() {
 
   @override
   Widget build(BuildContext context) {
+    _quantity = _quantity;
     return Column(
       children: [
         InkWell(
@@ -325,19 +361,59 @@ void _decrementQuantity() {
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.asset(
-                      widget.foodImage,
-                      fit: BoxFit.cover,
+                Column(
+                  children: [
+                    Container(
+                      height: 100,
+                      width: 100,
+                      // flex: 1,
+                      child: 
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image.asset(
+                          widget.foodImage,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                  ),
+                    // SizedBox(height: 10,),
+                    // Row(
+                    //   mainAxisSize: MainAxisSize.min,
+                    //   children: <Widget>[
+                    //     GestureDetector(
+                    //       onTap: _decrementQuantity,
+                    //       child: Container(
+                    //         padding: const EdgeInsets.all(3.0),
+                    //         decoration: BoxDecoration(
+                    //           color: Colors.white,
+                    //           shape: BoxShape.circle,
+                    //           border: Border.all(color: Colors.pink)
+                    //         ),
+                    //         child: Icon(Icons.remove, color: Colors.pink, size: 18,),
+                    //       ),
+                    //     ),
+                    //     SizedBox(width: 15.0),
+                    //     Text(_quantity.toString(), style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),),
+                    //     SizedBox(width: 15.0),
+                    //     GestureDetector(
+                    //       onTap: _incrementQuantity,
+                    //       child: Container(
+                    //         padding: const EdgeInsets.all(3.0),
+                    //         decoration: BoxDecoration(
+                    //           color: Colors.white,
+                    //           shape: BoxShape.circle,
+                    //           border: Border.all(color: Colors.pink)
+                    //         ),
+                    //         child: Icon(Icons.add, color: Colors.pink, size: 18,),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                  ],
                 )
               ],
             ),

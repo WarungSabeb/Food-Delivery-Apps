@@ -1,11 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:food_delivery/main_screen/Profile.dart';
-import 'package:food_delivery/main_screen/history.dart';
+import 'package:food_delivery/main_screen/History.dart';
 import 'package:food_delivery/main_screen/gofood.dart';
 import 'package:intl/intl.dart';
+import 'package:food_delivery/database/database.dart';
 
 List<String> list = <String>['Cash', 'Card'];
 final oCcy = NumberFormat("#,##0", "en_US");
@@ -32,12 +31,26 @@ class Cart extends StatefulWidget {
 
 
 class _CartState extends State<Cart> {
-  int _selectedIndex = 2;
   int totalPrice = 0;
   int dfee = 10000;
   int sfee = 5000;
+  int finalPrice = 0;
   TextEditingController noteController = TextEditingController();
   String paymentMethod = 'Cash';
+
+  final AppDb database = AppDb();
+  DateTime now = DateTime.now();
+
+    Future insert(
+      String resto, int price) async {
+    final row = await database.into(database.order).insertReturning(
+        OrderCompanion.insert(
+          restoName: resto, 
+          orderTime: now, 
+          price: price
+          )
+        );
+  }
 
   @override
   void initState() {
@@ -48,12 +61,14 @@ class _CartState extends State<Cart> {
   void calculateTotalPrice() {
     int price = widget.foodPrice;
     totalPrice = price * widget.quantity;
+    finalPrice = totalPrice + dfee + sfee;
   }
 
   void _incrementQuantity() {
   setState(() {
     widget.quantity++;
     totalPrice = widget.foodPrice * widget.quantity;
+    finalPrice = totalPrice + dfee + sfee;
   });
 }
 
@@ -62,27 +77,10 @@ void _decrementQuantity() {
     if (widget.quantity > 0) {
       widget.quantity--;
       totalPrice = widget.foodPrice * widget.quantity;
+      finalPrice = totalPrice + dfee + sfee;
     }
   });
 }
-
-  void _onTappedBottomNav(int index) {
-    List menuBottomNav = [gofood(), History(), Cart(
-                                foodName: "Ayam",
-                                foodPrice: 10000,
-                                quantity: 1,
-                                restoName: 'KFC',
-                                foodImage: 'assets/images/kuliner/bakso-mie.jpg',
-                              ), Profile()];
-    if (index != _selectedIndex) {
-      setState(() {
-        _selectedIndex = index;
-      });
-
-      Navigator.push(context,MaterialPageRoute(builder: (context) => menuBottomNav.elementAt(index)));
-
-    }
-  }
 
   SafeArea buildHeader() {
     return SafeArea(
@@ -151,7 +149,7 @@ void _decrementQuantity() {
                   ),
                   SizedBox(width: 90,),
                   OutlinedButton(
-                    onPressed: () {}, 
+                    onPressed: () {database.deleteDatabase();}, 
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: Colors.pink),
                     ),
@@ -382,7 +380,7 @@ String dropdownValue = list.first;
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Total:', style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                              Text('Rp ${oCcy.format(totalPrice + dfee + sfee)}', style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)
+                              Text('Rp ${oCcy.format(finalPrice)}', style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)
                             ],
                           ),
                           
@@ -443,9 +441,10 @@ String dropdownValue = list.first;
                           alignment: Alignment.center,
                           child: GestureDetector(
                           onTap: () {
+                            insert(widget.restoName, finalPrice);
                             Navigator.push(context,
                                 MaterialPageRoute(
-                                    builder: (context) => gofood()));
+                                    builder: (context) => History()));
                           },
                           child: Container(
                             width: 150,
@@ -477,44 +476,6 @@ String dropdownValue = list.first;
 
           ],
         ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 5,
-            ),
-          ],
-        ),
-
-          child: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_filled, size: 35),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.receipt_long, size: 35),
-                label: 'History',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart, size: 35),
-                label: 'Cart',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person, size: 35),
-                label: 'Profile',
-              ),
-            ],
-            currentIndex: 2,
-            selectedItemColor: Colors.red,
-            unselectedItemColor: Colors.black,
-            onTap: _onTappedBottomNav,
-            type: BottomNavigationBarType.fixed,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-          ),
-        )
       )
       
     );
