@@ -37,13 +37,13 @@ class _HistoryState extends State<History> {
 
   final List<Map> historian = [
     {
-      'restaurant': 'Pizza Hut',
-      'date': '22 Jun 2023, 17:32',
+      'restaurant': 'Bakso Pak Taufiq',
+      'date': '2023-07-08, 17:32',
       'price': 86500,
     },
     {
-      'restaurant': 'Burger King',
-      'date': '20 Jun 2023, 04:20',
+      'restaurant': 'Warung Bu Djito',
+      'date': '2023-07-07, 15:20',
       'price': 108000,
     },
   ];
